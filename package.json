@@ -4,8 +4,9 @@
   "description": "A TypeScript nodejs application to download live streams from TikTok by the shared URL.",
   "main": "app.js",
   "scripts": {
+    "build": "tsc",
     "start": "node build/app.js",
-    "build": "tsc"
+    "clear": "rimraf build/*"
   },
   "keywords": [
     "tiktok",
@@ -15,7 +16,7 @@
     "tiktok-live-ts"
   ],
   "author": "Carlos Lucas <@loo-kuhs>",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@types/node": "^18.14.2",
     "@types/node-fetch": "^2.6.2",
