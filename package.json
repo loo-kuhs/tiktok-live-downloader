@@ -15,7 +15,11 @@
     "tiktok-live",
     "tiktok-live-ts"
   ],
-  "author": "Carlos Lucas <@loo-kuhs>",
+  "author": {
+    "name": "Carlos Lucas",
+    "github": "@loo-kuhs",
+    "url": "https://github.com/loo-kuhs/tiktok-live-downloader"
+  },
   "license": "GPL-3.0",
   "devDependencies": {
     "@types/node": "^18.14.2",
