@@ -16,3 +16,25 @@ This project is currently in development. It is not yet ready for production.
 ## Installation
 
 ### Requirements
+
+This project requires ffmpeg to be installed on your system. You can download it from [here](https://ffmpeg.org/download.html).
+
+**Install ffmpeg on Windows:**
+  
+  ```bash
+  choco install ffmpeg-full
+  # or
+  scoop install ffmpeg
+  # or
+  winget install ffmpeg
+  ```
+**Install ffmpeg on Linux:**
+  
+  ```bash
+  sudo apt install ffmpeg
+  ```
+**Install ffmpeg on MacOS:**
+  
+  ```bash
+  brew install ffmpeg
+  ```
