@@ -19,6 +19,8 @@ This project is currently in development. It is not yet ready for production.
 
 This project requires ffmpeg to be installed on your system. You can download it from [here](https://ffmpeg.org/download.html).
 
+This project also requires Node.js to be installed on your system. You can download it from [here](https://nodejs.org/en/download/).
+
 **Install ffmpeg on Windows:**
   
   ```bash
@@ -38,3 +40,40 @@ This project requires ffmpeg to be installed on your system. You can download it
   ```bash
   brew install ffmpeg
   ```
+
+## Usage
+
+Clone the repository:
+
+```bash
+git clone https://github.com/loo-kuhs/tiktok-live-downloader.git
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Run the project:
+
+```bash
+npm start <tiktok username>
+# e.g.
+npm start mrbeast
+```
+
+## TODO
+
+- [ ] Add support for flv url extraction
+- [ ] Simplify the ffmpeg console output
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
