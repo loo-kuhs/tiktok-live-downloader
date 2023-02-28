@@ -25,20 +25,20 @@ export async function downloadLiveStream(
   }
 
   const roomId = matchRoomId[1]
-  console.log(roomId)
+  console.info(`\nFound live stream with room id ${roomId}!`)
 
   const { title, liveUrl } = await getTitleAndLiveUrl(roomId)
-
   const fileName = output.endsWith(format)
     ? output
     : `${output.replace(
         /\/$/,
         ''
       )}/${sanitizedUsername}-${Date.now()}.${format}`
-  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -c copy "${fileName}"`
+  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -c copy "${fileName}" -n -nostats -hide_banner -loglevel error`
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
-  console.info(`Downloading livestream ${title} to ${fileName}`)
-  shell.exec(ffmpegCommand)
+  console.info(`\nDownloading livestream ${title} to /${fileName}`)
+  console.info(`\nCtrl+C to stop downloading and exit`)
+  shell.exec(ffmpegCommand, { async: true })
 }
