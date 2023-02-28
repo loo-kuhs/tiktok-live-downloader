@@ -1,6 +1,6 @@
 # TikTok Live Stream Downloader
 
-This is a refactored version of [tiktok-live](https://github.com/Pauloo27/tiktok-live) by [Pauloo27](https://ginhub.com/Pauloo27).
+This is a refactored version of [tiktok-live](https://github.com/Pauloo27/tiktok-live) by [Pauloo27](https://github.com/Pauloo27).
 
 ## Project Status
 
@@ -77,3 +77,5 @@ npm start mrbeast
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Thanks to [Pauloo27](https://github.com/Pauloo27) for the original project code base.
