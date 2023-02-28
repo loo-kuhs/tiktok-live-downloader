@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/app.js",
-    "clear": "rimraf build/*"
+    "clear": "rimraf build"
   },
   "keywords": [
     "tiktok",
