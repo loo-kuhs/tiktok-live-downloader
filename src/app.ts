@@ -1,5 +1,6 @@
 import { program } from 'commander'
-import { downloadLiveStream } from './helpers/downloadLiveStream'
+import { downloadLiveStream } from './helpers/downloadLiveStream.js'
+import { errorLog, infoLog } from './utils/chalkConsole.js'
 
 program
   .argument('<username>', `tiktok username`)
@@ -14,9 +15,9 @@ program
 const { output, format } = program.opts()
 const username = program.args[0]
 
-console.info(`username: ${username}, output: ${output}, format: ${format}\n`)
+infoLog(`username: ${username}, output: ${output}, format: ${format}\n`)
 
 downloadLiveStream(username, output, format).catch((err) => {
-  console.error(err)
+  errorLog(err)
   process.exit(1)
 })

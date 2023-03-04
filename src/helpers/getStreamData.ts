@@ -1,5 +1,5 @@
-import tiktokApi from '../api/tiktokApi'
-import { LiveRoomInfo } from '../types/LiveRoomInfo'
+import tiktokApi from '../api/tiktokApi.js'
+import { LiveRoomInfo } from '../types/LiveRoomInfo.js'
 
 /**
  * It takes a roomId, makes a request to the tiktok api, parses the response, and returns the

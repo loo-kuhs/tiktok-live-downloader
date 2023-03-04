@@ -1,9 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 import shell from 'shelljs'
-import { newLiveUrl } from '../utils/constants'
-import { sanitizeUsername } from '../utils/sanitizedUsername'
-import getTitleAndLiveUrl from './getStreamData'
+import { infoLog, successLog, warningLog } from '../utils/chalkConsole.js'
+import { newLiveUrl } from '../utils/constants.js'
+import { sanitizeUsername } from '../utils/sanitizedUsername.js'
+import getTitleAndLiveUrl from './getStreamData.js'
 
 export async function downloadLiveStream(
   username: string,
@@ -25,7 +26,7 @@ export async function downloadLiveStream(
   }
 
   const roomId = matchRoomId[1]
-  console.info(`\nFound live stream with room id ${roomId}!`)
+  successLog(`\nFound live stream with room id ${roomId}!`)
 
   const { title, liveUrl } = await getTitleAndLiveUrl(roomId)
   const fileName = output.endsWith(format)
@@ -38,7 +39,7 @@ export async function downloadLiveStream(
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
-  console.info(`\nDownloading livestream ${title} to /${fileName}`)
-  console.info(`\nCtrl+C to stop downloading and exit`)
+  infoLog(`\nDownloading livestream ${title} to /${fileName}`)
+  warningLog(`\nCtrl+C to stop downloading and exit`)
   shell.exec(ffmpegCommand, { async: true })
 }
