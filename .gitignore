@@ -26,7 +26,6 @@ coverage.*
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 build/*
-downloads/
 
 # Dependency directory
 node_modules
@@ -41,3 +40,6 @@ typings/
 lib/*.js
 test/*.js
 *.map
+
+# Video files
+*.mp4

@@ -3,6 +3,7 @@ import path from 'path'
 import shell from 'shelljs'
 import { newLiveUrl } from '../utils/constants'
 import { sanitizeUsername } from '../utils/sanitizedUsername'
+import fetchHTML from './fetchHTML'
 import getTitleAndLiveUrl from './getStreamData'
 
 export async function downloadLiveStream(
@@ -16,10 +17,9 @@ export async function downloadLiveStream(
 
   const sanitizedUsername = sanitizeUsername(username)
   const liveUri = newLiveUrl(sanitizedUsername)
+  const textHTML = await fetchHTML(liveUri)
 
-  const body = await fetch(liveUri).then((res) => res.text())
-
-  const matchRoomId = body.match(/room_id=(\d+)/)
+  const matchRoomId = textHTML.match(/room_id=(\d+)/)
   if (!matchRoomId) {
     throw new Error('No live stream found')
   }
