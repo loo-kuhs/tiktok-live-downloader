@@ -4,5 +4,5 @@
  * @returns {string} string - The live URL of the TikTok account.
  */
 export function newLiveUrl(username: string): string {
-  return `https://www.tiktok.com/@${username}/live`
+  return `https://www.tiktok.com/@${username}/live/`
 }

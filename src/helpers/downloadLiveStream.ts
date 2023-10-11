@@ -1,10 +1,23 @@
 import fs from 'fs'
 import path from 'path'
 import shell from 'shelljs'
+import fetch from 'node-fetch'
 import { infoLog, successLog, warningLog } from '../utils/chalkConsole.js'
 import { newLiveUrl } from '../utils/constants.js'
 import { sanitizeUsername } from '../utils/sanitizedUsername.js'
 import getTitleAndLiveUrl from './getStreamData.js'
+
+async function fetchHTML(url: string): Promise<string> {
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Mobile Safari/537.36',
+    },
+  })
+  const body = await response.text()
+
+  return body
+}
 
 export async function downloadLiveStream(
   username: string,
@@ -17,10 +30,9 @@ export async function downloadLiveStream(
 
   const sanitizedUsername = sanitizeUsername(username)
   const liveUri = newLiveUrl(sanitizedUsername)
+  const textHTML = await fetchHTML(liveUri)
+  const matchRoomId = textHTML.match(/room_id=(\d+)/)
 
-  const body = await fetch(liveUri).then((res) => res.text())
-
-  const matchRoomId = body.match(/room_id=(\d+)/)
   if (!matchRoomId) {
     throw new Error('No live stream found')
   }
