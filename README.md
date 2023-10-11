@@ -30,11 +30,13 @@ This project also requires Node.js to be installed on your system. You can downl
   # or
   winget install ffmpeg
   ```
+
 **Install ffmpeg on Linux:**
   
   ```bash
   sudo apt install ffmpeg
   ```
+
 **Install ffmpeg on MacOS:**
   
   ```bash
