@@ -7,6 +7,7 @@ async function fetchHTML(url: string): Promise<string> {
     },
   }).then((res) => res.text())
 
+  console.info(`${body.length} bytes fetched from ${url}`)
   return body
 }
 

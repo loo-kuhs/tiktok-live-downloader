@@ -19,7 +19,7 @@ export async function downloadLiveStream(
   const liveUri = newLiveUrl(sanitizedUsername)
   const textHTML = await fetchHTML(liveUri)
 
-  const matchRoomId = textHTML.match(/room_id=(\d+)/)
+  const matchRoomId = textHTML.match(/"roomId":"(\d+)"/) // "roomId":"7392776838324325125 -- before: /room_id=(\d+)/
   if (!matchRoomId) {
     throw new Error('No live stream found')
   }
