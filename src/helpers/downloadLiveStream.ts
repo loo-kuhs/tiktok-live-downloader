@@ -34,11 +34,11 @@ export async function downloadLiveStream(
         /\/$/,
         ''
       )}/${sanitizedUsername}-${Date.now()}.${format}`
-  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -c copy "${fileName}" -n -nostats -hide_banner -loglevel error`
+  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -c copy "${fileName}" -n -stats -hide_banner -loglevel error`
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
   console.info(`\nDownloading livestream ${title} to /${fileName}`)
-  console.info(`\nCtrl+C to stop downloading and exit`)
+  console.info(`\nCtrl+C to stop downloading and exit\n`)
   shell.exec(ffmpegCommand, { async: true })
 }
