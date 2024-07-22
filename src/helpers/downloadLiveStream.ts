@@ -5,6 +5,7 @@ import { newLiveUrl } from '../utils/constants'
 import { sanitizeUsername } from '../utils/sanitizedUsername'
 import fetchHTML from './fetchHTML'
 import getTitleAndLiveUrl from './getStreamData'
+import matchRoomId from './matchRoomId'
 
 export async function downloadLiveStream(
   username: string,
@@ -18,16 +19,9 @@ export async function downloadLiveStream(
   const sanitizedUsername = sanitizeUsername(username)
   const liveUri = newLiveUrl(sanitizedUsername)
   const textHTML = await fetchHTML(liveUri)
-
-  const matchRoomId = textHTML.match(/"roomId":"(\d+)"/) // "roomId":"7392776838324325125 -- before: /room_id=(\d+)/
-  if (!matchRoomId) {
-    throw new Error('No live stream found')
-  }
-
-  const roomId = matchRoomId[1]
-  console.info(`\nFound live stream with room id ${roomId}!`)
-
+  const roomId = matchRoomId(textHTML)
   const { title, liveUrl } = await getTitleAndLiveUrl(roomId)
+  
   const fileName = output.endsWith(format)
     ? output
     : `${output.replace(
@@ -38,7 +32,7 @@ export async function downloadLiveStream(
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
-  console.info(`\nDownloading livestream ${title} to /${fileName}`)
-  console.info(`\nCtrl+C to stop downloading and exit\n`)
+  console.info(`\n✅ Downloading livestream ${title} to /${fileName}`)
+  console.info(`\n❗ Ctrl+C to stop downloading and exit\n`)
   shell.exec(ffmpegCommand, { async: true })
 }

@@ -14,8 +14,6 @@ program
 const { output, format } = program.opts()
 const username = program.args[0]
 
-console.info(`username: ${username}, output: ${output}, format: ${format}\n`)
-
 downloadLiveStream(username, output, format).catch((err) => {
   console.error(err)
   process.exit(1)
