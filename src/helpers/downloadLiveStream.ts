@@ -2,9 +2,9 @@ import fs from 'fs'
 import path from 'path'
 import shell from 'shelljs'
 import { newLiveUrl } from '../utils/constants'
-import { sanitizeUsername } from '../utils/sanitizedUsername'
+import { sanitizeUsername } from '../utils/sanitizeUsername'
 import fetchHTML from './fetchHTML'
-import getTitleAndLiveUrl from './getStreamData'
+import getLiveInfo from './getStreamData'
 import matchRoomId from './matchRoomId'
 
 export async function downloadLiveStream(
@@ -20,7 +20,7 @@ export async function downloadLiveStream(
   const liveUri = newLiveUrl(sanitizedUsername)
   const textHTML = await fetchHTML(liveUri)
   const roomId = matchRoomId(textHTML)
-  const { title, liveUrl } = await getTitleAndLiveUrl(roomId)
+  const { title, liveUrl } = await getLiveInfo(roomId)
   
   const fileName = output.endsWith(format)
     ? output
@@ -32,7 +32,7 @@ export async function downloadLiveStream(
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
-  console.info(`\n✅ Downloading livestream ${title} to /${fileName}`)
+  console.info(`\n✅ Downloading livestream ${title} to ./${fileName}`)
   console.info(`\n❗ Ctrl+C to stop downloading and exit\n`)
   shell.exec(ffmpegCommand, { async: true })
 }
