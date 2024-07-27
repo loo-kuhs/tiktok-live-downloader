@@ -21,14 +21,14 @@ export async function downloadLiveStream(
   const textHTML = await fetchHTML(liveUri)
   const roomId = matchRoomId(textHTML)
   const { title, liveUrl } = await getLiveInfo(roomId)
-  
+
   const fileName = output.endsWith(format)
     ? output
     : `${output.replace(
         /\/$/,
         ''
       )}/${sanitizedUsername}-${Date.now()}.${format}`
-  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -c copy "${fileName}" -n -stats -hide_banner -loglevel error`
+  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -movflags use_metadata_tags -map_metadata 0 -metadata title="${title}" -metadata artist="${sanitizedUsername}" -metadata year="${new Date().getFullYear()}" -c copy "${fileName}" -n -stats -hide_banner -loglevel error`
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
