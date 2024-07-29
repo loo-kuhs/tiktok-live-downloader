@@ -4,10 +4,8 @@ This is a refactored version of [tiktok-live](https://github.com/Pauloo27/tiktok
 
 ## Project Status
 
-This project is currently in development. It is not yet ready for production.
+This project is currently in development. Before open a issue, please read the installation usage section.
 
-> Ongoing
->
 > ![GitHub top language](https://img.shields.io/github/languages/top/loo-kuhs/tiktok-live-downloader?style=for-the-badge)
 > ![GitHub last commit](https://img.shields.io/github/last-commit/loo-kuhs/tiktok-live-downloader?style=for-the-badge)
 > ![GitHub repo size](https://img.shields.io/github/repo-size/loo-kuhs/tiktok-live-downloader?style=for-the-badge)
@@ -76,11 +74,6 @@ node build/app.js <username> -f <format>
 # e.g.
 npm build/app.js mrbeast --output ./mydownloads --format mp4
 ```
-
-## TODO
-
-- [ ] Add support for flv url extraction
-- [ ] Simplify the ffmpeg console output
 
 ## Contributing
 
