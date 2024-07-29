@@ -66,9 +66,15 @@ npm run build
 Run the project:
 
 ```bash
-npm start <tiktok username>
+node build/app.js <username> --output <output> --format <format>
+# or
+node build/app.js <username> -o <output> -f <format>
+# or
+node build/app.js <username> -o <output>
+# or
+node build/app.js <username> -f <format>
 # e.g.
-npm start mrbeast
+npm build/app.js mrbeast --output ./mydownloads --format mp4
 ```
 
 ## TODO

@@ -1,29 +1,62 @@
-import tiktokApi from '../api/tiktokApi'
-import { TikTokApiResponse, LiveRoomInfo } from '../types/TikTokApiInterface'
+import getTiktokApiResponse from '../api/getTiktokApiResponse'
+import getWebCastTikTokApiResponse from '../api/getWebCastTikTokApiResponse'
 
 /**
- * It takes a roomId, makes a request to the tiktok api, and returns the response.
+ * It creates the stream data object with the stream url, title, user, status online, and if it's flv.
  *
+ * @export
  * @param {string} roomId - The room ID of the live stream.
- * @return {Promise<TikTokApiResponse>} - The response from the tiktok api.
+ * @return {Promise<{
+ * url: string
+ * title: string
+ * user: string
+ * statusOnline: number
+ * isFlv: boolean
+ * }>} - The stream data object.
+ * @throws {Error} - If the live stream url is empty or the user is offline.
  */
-async function getTiktokApiResponse(
-  roomId: string
-): Promise<TikTokApiResponse> {
-  const api = tiktokApi(roomId)
-  const response = await fetch(api)
-  const data = await response.json()
+export async function setStreamData(roomId: string): Promise<{
+  url: string
+  title: string
+  user: string
+  statusOnline: number
+  isFlv: boolean
+}> {
+  const onlineStatus = 2
+  const { liveUrl, liveTitle, liveUser, liveStatus } =
+    await getM3u8LiveStreamInfo(roomId)
+  const { streamUrlFlv, streamTitleFlv, usernameFlv, statusFlv } =
+    await getFlvLiveStreamInfo(roomId)
 
-  const tiktokResponse: TikTokApiResponse = {
-    LiveRoomInfo: data.LiveRoomInfo,
-    extra: data.extra,
-    log_pb: data.log_pb,
-    statusCode: data.statusCode,
-    status_code: data.status_code,
-    status_msg: data.status_msg,
+  if (liveUrl === '' && streamUrlFlv === '') {
+    throw new Error(
+      `\n❌ No url live stream found! This user is offline or the live url is empty.`
+    ).message
   }
 
-  return tiktokResponse
+  if (liveUrl !== '' && liveStatus === onlineStatus) {
+    console.info(`\n✅ Found the live stream of: ${liveUser}! 🎉`)
+    return {
+      url: liveUrl,
+      title: liveTitle,
+      user: liveUser,
+      statusOnline: liveStatus,
+      isFlv: false,
+    }
+  } else if (streamUrlFlv !== '' && statusFlv === onlineStatus) {
+    console.info(`\n✅ Found the live stream of: ${liveUser}! 🎉`)
+    return {
+      url: streamUrlFlv,
+      title: streamTitleFlv,
+      user: usernameFlv,
+      statusOnline: statusFlv,
+      isFlv: true,
+    }
+  } else {
+    throw new Error(
+      `\n❌ No url live stream found! This user is offline or the live url is empty.`
+    ).message
+  }
 }
 
 /**
@@ -32,20 +65,36 @@ async function getTiktokApiResponse(
  * @param {string} roomId - The room ID of the live stream.
  * @returns {Promise<LiveRoomInfo>} - The LiveRoomInfo object.
  */
-async function getTitleAndLiveUrl(roomId: string): Promise<LiveRoomInfo> {
+async function getM3u8LiveStreamInfo(roomId: string): Promise<{
+  liveUrl: string
+  liveTitle: string
+  liveUser: string
+  liveStatus: number
+}> {
   const response = await getTiktokApiResponse(roomId)
-  const { liveUrl, status } = response.LiveRoomInfo
-  const onlineStatus = 2
-
-  if (liveUrl === '' || status !== onlineStatus) {
-    throw new Error(`\n❌ No url live stream found! This user is offline.`)
-      .message
+  const liveStreamInfo = {
+    liveUrl: response.LiveRoomInfo.liveUrl,
+    liveTitle: response.LiveRoomInfo.title,
+    liveUser: response.LiveRoomInfo.ownerInfo.nickname,
+    liveStatus: response.LiveRoomInfo.status,
   }
 
-  console.info(
-    `\n✅ Found live stream: ${response.LiveRoomInfo.ownerInfo.nickname}! 🎉`
-  )
-  return response.LiveRoomInfo
+  return liveStreamInfo
 }
 
-export default getTitleAndLiveUrl
+async function getFlvLiveStreamInfo(roomId: string): Promise<{
+  streamUrlFlv: string
+  streamTitleFlv: string
+  usernameFlv: string
+  statusFlv: number
+}> {
+  const response = await getWebCastTikTokApiResponse(roomId)
+  const flvStreamInfo = {
+    streamUrlFlv: response.data.stream_url.flv_pull_url.FULL_HD1,
+    streamTitleFlv: response.data.title,
+    statusFlv: response.data.status,
+    usernameFlv: response.data.owner.nickname,
+  }
+
+  return flvStreamInfo
+}

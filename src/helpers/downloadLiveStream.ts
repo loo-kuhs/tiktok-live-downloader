@@ -1,10 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import shell from 'shelljs'
-import { newLiveUrl } from '../utils/constants'
-import { sanitizeUsername } from '../utils/sanitizeUsername'
+import {
+  sanitizeUsername,
+  newLiveUrl,
+  fileNameOutput,
+  ffmpegCommandMP4,
+  ffmpegCommandMKV,
+} from '../utils/constants'
 import fetchHTML from './fetchHTML'
-import getLiveInfo from './getStreamData'
+import { setStreamData } from './getStreamData'
 import matchRoomId from './matchRoomId'
 
 export async function downloadLiveStream(
@@ -12,23 +17,26 @@ export async function downloadLiveStream(
   output: string,
   format: string
 ): Promise<void> {
-  if (format !== 'mp4') {
-    throw new Error('Only mp4 format is supported')
-  }
-
+  const acceptedFormats = ['mp4', 'mkv']
   const sanitizedUsername = sanitizeUsername(username)
   const liveUri = newLiveUrl(sanitizedUsername)
   const textHTML = await fetchHTML(liveUri)
   const roomId = matchRoomId(textHTML)
-  const { title, liveUrl } = await getLiveInfo(roomId)
+  const { url, title, user, isFlv } = await setStreamData(roomId)
+  const fileName = fileNameOutput(output, sanitizedUsername, format)
+  let ffmpegCommand = ''
 
-  const fileName = output.endsWith(format)
-    ? output
-    : `${output.replace(
-        /\/$/,
-        ''
-      )}/${sanitizedUsername}-${Date.now()}.${format}`
-  const ffmpegCommand = `ffmpeg -i "${liveUrl}" -movflags use_metadata_tags -map_metadata 0 -metadata title="${title}" -metadata artist="${sanitizedUsername}" -metadata year="${new Date().getFullYear()}" -c copy "${fileName}" -n -stats -hide_banner -loglevel error`
+  if (acceptedFormats.includes(format) && !isFlv) {
+    ffmpegCommand =
+      format === 'mp4'
+        ? ffmpegCommandMP4(url, title, sanitizedUsername, fileName)
+        : ffmpegCommandMKV(url, fileName)
+  } else if (format === 'mp4' && isFlv) {
+    ffmpegCommand = ffmpegCommandMKV(url, fileName)
+  } else {
+    throw new Error(`\n❌ Invalid format: ${format}. Use mp4 or mkv formats.`)
+      .message
+  }
 
   fs.mkdirSync(path.dirname(fileName), { recursive: true })
 
