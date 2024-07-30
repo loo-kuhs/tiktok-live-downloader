@@ -11,20 +11,21 @@ import {
 import fetchHTML from './fetchHTML'
 import { setStreamData } from './getStreamData'
 import matchRoomId from './matchRoomId'
+import { StreamData } from '../types/StreamData'
 
 export async function downloadLiveStream(
   username: string,
   output: string,
   format: string
 ): Promise<void> {
-  const acceptedFormats = ['mp4', 'mkv']
-  const sanitizedUsername = sanitizeUsername(username)
-  const liveUri = newLiveUrl(sanitizedUsername)
-  const textHTML = await fetchHTML(liveUri)
-  const roomId = matchRoomId(textHTML)
-  const { url, title, user, isFlv } = await setStreamData(roomId)
-  const fileName = fileNameOutput(output, sanitizedUsername, format)
-  let ffmpegCommand = ''
+  const acceptedFormats: string[] = ['mp4', 'mkv']
+  const sanitizedUsername: string = sanitizeUsername(username)
+  const liveUri: string = newLiveUrl(sanitizedUsername)
+  const textHTML: string = await fetchHTML(liveUri)
+  const roomId: string = matchRoomId(textHTML)
+  const { url, title, isFlv }: StreamData = await setStreamData(roomId)
+  const fileName: string = fileNameOutput(output, sanitizedUsername, format)
+  let ffmpegCommand: string = ''
 
   if (acceptedFormats.includes(format) && !isFlv) {
     ffmpegCommand =

@@ -1,26 +1,22 @@
 import { Command } from 'commander'
+import { OptionsProgram } from './types/OptionsProgram'
 import { downloadLiveStream } from './helpers/downloadLiveStream'
 
 const program = new Command()
 
-interface OptionsProgram {
-  output: string
-  format: string
-  debug: boolean
-}
-
 program
-  .argument('<username>', 'username of tiktok user')
-  .description('download tiktok live stream')
+  .argument('<username>', 'Username of tiktok user')
+  .description('Download tiktok live stream')
   .option(
     '-o, --output [path]',
-    `output file or folder path (eg ./folder or ./folder/file.mp4)`,
+    `Output file or folder path (eg ./folder or ./folder/file.mp4)`,
     `downloads`
   )
-  .option('-f, --format <format>', 'output format', 'mp4')
+  .option('-f, --format <format>', 'Output formats valid mp4 and mkv', 'mp4')
   .option('-d, --debug', 'output extra debugging')
   .action((username: string, options: OptionsProgram) => {
-    const { output, format } = options
+    const { output, format }: OptionsProgram = options
+
     console.info(`\n✅ Searching user's live stream: ${username}`)
     console.info(`💾 Output directory: ${output}`)
     console.info(`📹 Format video: ${format}\n`)

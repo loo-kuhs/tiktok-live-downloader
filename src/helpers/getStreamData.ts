@@ -1,27 +1,16 @@
 import getTiktokApiResponse from '../api/getTiktokApiResponse'
 import getWebCastTikTokApiResponse from '../api/getWebCastTikTokApiResponse'
+import { StreamData } from '../types/StreamData'
 
 /**
  * It creates the stream data object with the stream url, title, user, status online, and if it's flv.
  *
  * @export
  * @param {string} roomId - The room ID of the live stream.
- * @return {Promise<{
- * url: string
- * title: string
- * user: string
- * statusOnline: number
- * isFlv: boolean
- * }>} - The stream data object.
+ * @return {Promise<StreamData>} - The StreamData object.
  * @throws {Error} - If the live stream url is empty or the user is offline.
  */
-export async function setStreamData(roomId: string): Promise<{
-  url: string
-  title: string
-  user: string
-  statusOnline: number
-  isFlv: boolean
-}> {
+export async function setStreamData(roomId: string): Promise<StreamData> {
   const onlineStatus = 2
   const { liveUrl, liveTitle, liveUser, liveStatus } =
     await getM3u8LiveStreamInfo(roomId)
