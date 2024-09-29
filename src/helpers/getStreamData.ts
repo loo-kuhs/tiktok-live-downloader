@@ -13,7 +13,7 @@ import { StreamData } from '../types/StreamData'
 export async function setStreamData(roomId: string): Promise<StreamData> {
   const onlineStatus = 2
   const { liveUrl, liveTitle, liveUser, liveStatus } =
-    await getM3u8LiveStreamInfo(roomId)
+    await getHlsLiveStreamInfo(roomId)
   const { streamUrlFlv, streamTitleFlv, usernameFlv, statusFlv } =
     await getFlvLiveStreamInfo(roomId)
 
@@ -54,7 +54,7 @@ export async function setStreamData(roomId: string): Promise<StreamData> {
  * @param {string} roomId - The room ID of the live stream.
  * @returns {Promise<LiveRoomInfo>} - The LiveRoomInfo object.
  */
-async function getM3u8LiveStreamInfo(roomId: string): Promise<{
+async function getHlsLiveStreamInfo(roomId: string): Promise<{
   liveUrl: string
   liveTitle: string
   liveUser: string
