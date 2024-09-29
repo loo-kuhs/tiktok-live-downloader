@@ -24,7 +24,7 @@ export async function downloadLiveStream(
   const textHTML: string = await fetchHTML(liveUri)
   const roomId: string = matchRoomId(textHTML)
   const { url, title, isFlv }: StreamData = await setStreamData(roomId)
-  const fileName: string = fileNameOutput(output, sanitizedUsername, format)
+  let fileName: string = fileNameOutput(output, sanitizedUsername, format)
   let ffmpegCommand: string = ''
 
   if (acceptedFormats.includes(format) && !isFlv) {
@@ -33,6 +33,7 @@ export async function downloadLiveStream(
         ? ffmpegCommandMP4(url, title, sanitizedUsername, fileName)
         : ffmpegCommandMKV(url, fileName)
   } else if (format === 'mp4' && isFlv) {
+    fileName = fileNameOutput(output, sanitizedUsername, 'mkv')
     ffmpegCommand = ffmpegCommandMKV(url, fileName)
   } else {
     throw new Error(`\n❌ Invalid format: ${format}. Use mp4 or mkv formats.`)
