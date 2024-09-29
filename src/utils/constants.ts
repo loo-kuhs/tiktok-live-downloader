@@ -52,11 +52,17 @@ export const fileNameOutput = (
   username: string,
   format: string
 ): string => {
-  return output.endsWith(format)
-    ? output
-    : `${output}/${username}-${new Date()
-        .toLocaleString()
-        .replace(/[^\d]/g, '')}.${format === 'mp4' ? 'mp4' : 'mkv'}`
+  if (output.endsWith('.mp4') || output.endsWith('.mkv')) {
+    return output
+  }
+
+  const sanitizedOutput: string = output.endsWith('/')
+    ? output.slice(0, -1)
+    : output
+
+  const timeStamp: string = new Date().toLocaleString().replace(/[^\d]/g, '')
+
+  return `${sanitizedOutput}/${username}-${timeStamp}.${format}`
 }
 
 /**
