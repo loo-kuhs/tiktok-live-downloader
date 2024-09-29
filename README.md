@@ -75,6 +75,18 @@ node build/app.js <username> -f <format>
 node build/app.js mrbeast --output mydownloads --format mp4
 ```
 
+## Open Issues
+
+Before open a issue, please read all the requirements, installation and usage section.
+If you have any questions, please open a issue answering the following questions:
+
+- What is the problem? (Please describe and provide logs and/or screenshots)
+- What version of Node.js and npm are you using?
+- What operating system are you using?
+- Are you using the latest version of the project?
+- Did you follow all the requirements, installation and usage section?
+- Did you try to run the project on another operating system/environment?
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
