@@ -17,7 +17,7 @@ program
   .action((username: string, options: OptionsProgram) => {
     const { output, format }: OptionsProgram = options
 
-    console.info(`\n✅ Searching user's live stream: ${username}`)
+    console.info(`\n🔎 Searching ${username}'s live stream`)
     console.info(`💾 Output directory: ${output}`)
     console.info(`📹 Format video: ${format}\n`)
 
