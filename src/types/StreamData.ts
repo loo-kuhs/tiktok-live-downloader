@@ -5,3 +5,10 @@ export interface StreamData {
   statusOnline: number
   isFlv: boolean
 }
+
+export interface StreamInfo {
+  liveUrl: string
+  liveTitle: string
+  liveUser: string
+  liveStatus: number
+}

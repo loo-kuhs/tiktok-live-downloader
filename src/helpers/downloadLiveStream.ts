@@ -38,13 +38,10 @@ export async function downloadLiveStream(
     const [streamData]: [StreamData] = await Promise.all([
       setStreamData(roomId),
     ])
-
     const { url, title, isFlv }: StreamData = streamData
 
     let fileName: string = fileNameOutput(output, sanitizedUsername, format)
-    let ffmpegCommand: string = ''
-
-    ffmpegCommand = buildFfmpegCommand(
+    let ffmpegCommand: string = buildFfmpegCommand(
       url,
       title,
       sanitizedUsername,
