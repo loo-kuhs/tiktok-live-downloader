@@ -1,6 +1,6 @@
 {
   "name": "tiktok-live-ts",
-  "version": "1.5.4",
+  "version": "1.6.4",
   "description": "A TypeScript nodejs application to download live streams from TikTok by the shared URL.",
   "main": "app.js",
   "scripts": {
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "commander": "^10.0.0",
+    "puppeteer": "^23.5.0",
     "shelljs": "^0.8.5"
   }
 }

@@ -16,7 +16,7 @@ export async function setStreamData(roomId: string): Promise<StreamData> {
     getStreamInfo(roomId, 'FLV'),
   ])
   const onlineStatus = 2
-
+  
   if (!hlsInfo.liveUrl && !flvInfo.liveUrl) {
     throw new Error(`❌ The user is offline or the live stream url is empty!`)
       .message
@@ -65,7 +65,9 @@ async function getStreamInfo(
 
   const response = await getWebCastTikTokApiResponse(roomId)
   return {
-    liveUrl: response.data.stream_url.flv_pull_url.FULL_HD1,
+    liveUrl:
+      response.data.stream_url.flv_pull_url.FULL_HD1 ||
+      response.data.stream_url.flv_pull_url.HD1,
     liveTitle: response.data.title,
     liveUser: response.data.owner.nickname,
     liveStatus: response.data.status,
