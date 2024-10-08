@@ -10,13 +10,16 @@ import { StreamData, StreamInfo } from '../types/StreamData'
  * @return {Promise<StreamData>} - The StreamData object.
  * @throws {Error} - If the live stream url is empty or the user is offline.
  */
-export async function setStreamData(roomId: string): Promise<StreamData> {
+export async function setStreamData(
+  roomId: string,
+  cookie: string
+): Promise<StreamData> {
   const [hlsInfo, flvInfo] = await Promise.all([
-    getStreamInfo(roomId, 'HLS'),
-    getStreamInfo(roomId, 'FLV'),
+    getStreamInfo(roomId, cookie, 'HLS'),
+    getStreamInfo(roomId, cookie, 'FLV'),
   ])
   const onlineStatus = 2
-  
+
   if (!hlsInfo.liveUrl && !flvInfo.liveUrl) {
     throw new Error(`❌ The user is offline or the live stream url is empty!`)
       .message
@@ -51,10 +54,11 @@ export async function setStreamData(roomId: string): Promise<StreamData> {
 
 async function getStreamInfo(
   roomId: string,
+  cookie: string,
   type: 'HLS' | 'FLV'
 ): Promise<StreamInfo> {
   if (type === 'HLS') {
-    const response = await getTiktokApiResponse(roomId)
+    const response = await getTiktokApiResponse(roomId, cookie)
     return {
       liveUrl: response.LiveRoomInfo.liveUrl,
       liveTitle: response.LiveRoomInfo.title,
@@ -63,7 +67,7 @@ async function getStreamInfo(
     }
   }
 
-  const response = await getWebCastTikTokApiResponse(roomId)
+  const response = await getWebCastTikTokApiResponse(roomId, cookie)
   return {
     liveUrl:
       response.data.stream_url.flv_pull_url.FULL_HD1 ||

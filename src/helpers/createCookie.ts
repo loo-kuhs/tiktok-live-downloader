@@ -8,12 +8,12 @@ async function createCookie(): Promise<string> {
     const browser = await launch({
       headless: true,
       executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-      userDataDir: `${process.env.APPDATA}/Google/Chrome/User Data/Default`,
+      userDataDir: `${process.env.APPDATA}/Google/Chrome/User Data/Default/`,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     })
     const page = await browser.newPage()
 
-    await page.goto('https://www.tiktok.com/', {
+    await page.goto('https://www.tiktok.com/live', {
       waitUntil: ['domcontentloaded', 'networkidle2'],
     })
 

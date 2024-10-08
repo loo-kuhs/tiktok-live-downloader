@@ -5,13 +5,19 @@ import { tiktokApi } from '../utils/constants'
  * It takes a roomId, makes a request to the tiktok api, and returns the response.
  *
  * @param {string} roomId - The room ID of the live stream.
+ * @param {string} cookie - The cookie to be able to make the request.
  * @return {Promise<TikTokApiResponse>} - The response from the tiktok api.
  */
 async function getTiktokApiResponse(
-  roomId: string
+  roomId: string,
+  cookie: string
 ): Promise<TikTokApiResponse> {
   const api = tiktokApi(roomId)
-  const response = await fetch(api)
+  const response = await fetch(api, {
+    headers: {
+      cookie: cookie,
+    },
+  })
   const data = await response.json()
 
   const tiktokResponse: TikTokApiResponse = {
