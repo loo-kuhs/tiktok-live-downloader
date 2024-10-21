@@ -44,3 +44,6 @@ test/*.js
 # Video files
 *.mp4
 *.mkv
+
+# Text files
+*.txt

@@ -11,7 +11,7 @@ import { setStreamData } from './getStreamData'
 import matchRoomId from './matchRoomId'
 import { StreamData } from '../types/StreamData'
 import buildFfmpegCommand from './buildFfmpegCommand'
-import createCookie from './createCookie'
+import evaluateCookie from './evaluateCookie'
 
 export async function downloadLiveStream(
   username: string,
@@ -35,7 +35,7 @@ export async function downloadLiveStream(
     const liveUrl: string = newLiveUrl(sanitizedUsername)
     const textHTML: string = await fetchHTML(liveUrl)
     const roomId: string = matchRoomId(textHTML)
-    const newCookie: string = await createCookie()
+    const newCookie: string = await evaluateCookie()
 
     const [streamData]: [StreamData] = await Promise.all([
       setStreamData(roomId, newCookie),
