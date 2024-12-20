@@ -1,5 +1,5 @@
 import { WebCastTikTokApiResponse } from '../types/WebCastTikTokApiInterface'
-import { webcastTiktokApi } from '../utils/constants'
+import { userAgent, webcastTiktokApi } from '../utils/constants'
 
 /**
  * It takes a roomId, makes a request to the tiktok api, and returns the response.
@@ -16,6 +16,7 @@ async function getWebCastTikTokApiResponse(
   const response = await fetch(api, {
     headers: {
       cookie: cookie,
+      'User-Agent': userAgent,
     },
   })
 

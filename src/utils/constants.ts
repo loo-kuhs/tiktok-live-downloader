@@ -1,4 +1,10 @@
 /**
+ * Constant for User-Agent header. It is used to make requests to the TikTok API.
+ */
+export const userAgent: string =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+
+/**
  * It takes a string, checks if it starts with an @ symbol, and if it does, it returns the string
  * without the @ symbol
  * @param {string} username - The username to sanitize

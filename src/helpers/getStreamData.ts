@@ -18,6 +18,7 @@ export async function setStreamData(
     getStreamInfo(roomId, cookie, 'HLS'),
     getStreamInfo(roomId, cookie, 'FLV'),
   ])
+
   const onlineStatus = 2
 
   if (!hlsInfo.liveUrl && !flvInfo.liveUrl) {
@@ -57,8 +58,10 @@ async function getStreamInfo(
   cookie: string,
   type: 'HLS' | 'FLV'
 ): Promise<StreamInfo> {
+  let response
+
   if (type === 'HLS') {
-    const response = await getTiktokApiResponse(roomId, cookie)
+    response = await getTiktokApiResponse(roomId, cookie)
     return {
       liveUrl: response.LiveRoomInfo.liveUrl,
       liveTitle: response.LiveRoomInfo.title,
@@ -67,7 +70,7 @@ async function getStreamInfo(
     }
   }
 
-  const response = await getWebCastTikTokApiResponse(roomId, cookie)
+  response = await getWebCastTikTokApiResponse(roomId, cookie)
   return {
     liveUrl:
       response.data.stream_url.flv_pull_url.FULL_HD1 ||

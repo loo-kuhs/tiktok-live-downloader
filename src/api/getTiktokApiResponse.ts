@@ -1,5 +1,5 @@
 import { TikTokApiResponse } from '../types/TikTokApiInterface'
-import { tiktokApi } from '../utils/constants'
+import { tiktokApi, userAgent } from '../utils/constants'
 
 /**
  * It takes a roomId, makes a request to the tiktok api, and returns the response.
@@ -16,10 +16,11 @@ async function getTiktokApiResponse(
   const response = await fetch(api, {
     headers: {
       cookie: cookie,
+      'User-Agent': userAgent,
     },
   })
-  const data = await response.json()
 
+  const data = await response.json()
   const tiktokResponse: TikTokApiResponse = {
     LiveRoomInfo: data.LiveRoomInfo,
     extra:        data.extra,

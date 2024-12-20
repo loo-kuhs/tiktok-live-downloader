@@ -40,6 +40,7 @@ export async function downloadLiveStream(
     const [streamData]: [StreamData] = await Promise.all([
       setStreamData(roomId, newCookie),
     ])
+
     const { url, title, isFlv }: StreamData = streamData
 
     let fileName: string = fileNameOutput(output, sanitizedUsername, format)
@@ -59,6 +60,6 @@ export async function downloadLiveStream(
 
     shell.exec(ffmpegCommand, { async: true })
   } catch (error) {
-    throw new Error(`❌ Error: ${error}`).message
+    throw new Error(`❌ Error: ${error}`).stack
   }
 }
