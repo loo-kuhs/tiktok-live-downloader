@@ -58,10 +58,14 @@ export const fileNameOutput = (
   username: string,
   format: string
 ): string => {
-  if (output.endsWith('.mp4') || output.endsWith('.mkv')) {
+  if (output.endsWith('.mp4') || output.endsWith('.mkv')||format.
+     ) {
     return output
   }
-
+if (output.endsWith('live') || output.endsWith('shopee')||format.
+     ) {
+    return output
+  }
   const sanitizedOutput: string = output.endsWith('/')
     ? output.slice(0, -1)
     : output
