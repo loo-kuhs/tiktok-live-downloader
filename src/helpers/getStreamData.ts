@@ -1,4 +1,3 @@
-import getTiktokApiResponse from '../api/getTiktokApiResponse'
 import getWebCastTikTokApiResponse from '../api/getWebCastTikTokApiResponse'
 import { StreamData, StreamInfo } from '../types/StreamData'
 
@@ -14,27 +13,13 @@ export async function setStreamData(
   roomId: string,
   cookie: string
 ): Promise<StreamData> {
-  const [hlsInfo, flvInfo] = await Promise.all([
-    getStreamInfo(roomId, cookie, 'HLS'),
-    getStreamInfo(roomId, cookie, 'FLV'),
-  ])
+  const [flvInfo] = await Promise.all([getStreamInfo(roomId, cookie, 'FLV')])
 
   const onlineStatus = 2
 
-  if (!hlsInfo.liveUrl && !flvInfo.liveUrl) {
+  if (!flvInfo.liveUrl) {
     throw new Error(`❌ The user is offline or the live stream url is empty!`)
       .message
-  }
-
-  if (hlsInfo.liveUrl && hlsInfo.liveStatus === onlineStatus) {
-    console.info(`\n✅ [1] Found ${hlsInfo.liveUser} live stream url! 🎉`)
-    return {
-      url: hlsInfo.liveUrl,
-      title: hlsInfo.liveTitle,
-      user: hlsInfo.liveUser,
-      statusOnline: hlsInfo.liveStatus,
-      isFlv: false,
-    }
   }
 
   if (flvInfo.liveUrl && flvInfo.liveStatus === onlineStatus) {
@@ -56,21 +41,9 @@ export async function setStreamData(
 async function getStreamInfo(
   roomId: string,
   cookie: string,
-  type: 'HLS' | 'FLV'
+  type: 'FLV'
 ): Promise<StreamInfo> {
-  let response
-
-  if (type === 'HLS') {
-    response = await getTiktokApiResponse(roomId, cookie)
-    return {
-      liveUrl: response.LiveRoomInfo.liveUrl,
-      liveTitle: response.LiveRoomInfo.title,
-      liveUser: response.LiveRoomInfo.ownerInfo.nickname,
-      liveStatus: response.LiveRoomInfo.status,
-    }
-  }
-
-  response = await getWebCastTikTokApiResponse(roomId, cookie)
+  let response = await getWebCastTikTokApiResponse(roomId, cookie)
   return {
     liveUrl:
       response.data.stream_url.flv_pull_url.FULL_HD1 ||
