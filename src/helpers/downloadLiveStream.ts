@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import shell from 'shelljs'
+import shell, { ExecOptions, ExecCallback } from 'shelljs'
 import {
   sanitizeUsername,
   newLiveUrl,
@@ -12,6 +12,8 @@ import matchRoomId from './matchRoomId'
 import { StreamData } from '../types/StreamData'
 import buildFfmpegCommand from './buildFfmpegCommand'
 import evaluateCookie from './evaluateCookie'
+
+type ExecOptions = { async: boolean }
 
 export async function downloadLiveStream(
   username: string,
@@ -58,7 +60,16 @@ export async function downloadLiveStream(
     console.info(`\n✅ Downloading livestream ${title} to ./${fileName}`)
     console.info(`\n❗ Ctrl+C to stop downloading and exit\n`)
 
-    shell.exec(ffmpegCommand, { async: true })
+    shell.exec(
+      ffmpegCommand,
+      { async: true } as ExecOptions,
+      (code: number, stdout: string, stderr: string) => {
+        console.log(`Process exited with code ${code}`)
+        if (stdout) console.log(`stdout: ${stdout}`)
+        if (stderr) console.log(`stderr: ${stderr}`)
+        process.exit(code)
+      }
+    )
   } catch (error) {
     throw new Error(`❌ Error: ${error}`).stack
   }

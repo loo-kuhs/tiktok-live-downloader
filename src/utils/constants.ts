@@ -90,23 +90,23 @@ export const ffmpegCommandMP4 = (
 
   return `
 ffmpeg \\
-  -reconnect 1 \\                    # reintentar conexión ante fallo de red
-  -reconnect_streamed 1 \\           # aplicar reintentos en streams no seekables
-  -reconnect_at_eof 1 \\             # reintentar si llega un EOF inesperado
-  -reconnect_delay_max 2000 \\       # retardo máximo entre reintentos (ms)
-  -rw_timeout 8000000 \\             # timeout de I/O en µs (8s)
-  -i "${liveUrl}" \\                 # fuente de entrada
-  -movflags use_metadata_tags \\     # habilita metadata en el contenedor MP4
-  -map_metadata 0 \\                 # copia toda la metadata desde la fuente
-  -metadata title="${title}" \\      # etiqueta “title”
-  -metadata artist="${username}" \\  # etiqueta “artist”
-  -metadata year="${year}" \\        # etiqueta “year”
-  -c copy \\                         # copia streams sin recodificar
-  "${fileName}" \\                   # archivo de salida
-  -n \\                              # no sobrescribir si existe
-  -stats \\                          # mostrar progreso en consola
-  -hide_banner \\                    # oculta el banner inicial de ffmpeg
-  -loglevel error                    # sólo muestra errores
+  -reconnect 1 \\                    # Retry connection on network errors
+  -reconnect_streamed 1 \\           # Enable retries for non-seekable streams
+  -reconnect_at_eof 1 \\             # Retry on EOF
+  -reconnect_delay_max 2000 \\       # Max delay between retries (2s)
+  -rw_timeout 8000000 \\             # I/O timeout in µs (8s)
+  -i "${liveUrl}" \\                 # Input source (live stream URL)
+  -movflags use_metadata_tags \\     # Enable metadata tags in MP4 container
+  -map_metadata 0 \\                 # Copy all metadata from source
+  -metadata title="${title}" \\      # Set title metadata
+  -metadata artist="${username}" \\  # Set artist metadata
+  -metadata year="${year}" \\        # Set year metadata
+  -c copy \\                         # Copy streams without re-encoding
+  "${fileName}" \\                   # Output file name
+  -n \\                              # Do not overwrite existing files
+  -stats \\                          # Show progress stats
+  -hide_banner \\                    # Hide startup banner
+  -loglevel error                    # Only show errors
 `.trim()
 }
 
