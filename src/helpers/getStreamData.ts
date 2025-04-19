@@ -23,7 +23,7 @@ export async function setStreamData(
   }
 
   if (flvInfo.liveUrl && flvInfo.liveStatus === onlineStatus) {
-    console.info(`\n✅ [2] Found ${flvInfo.liveUser} live stream url! 🎉`)
+    console.info(`\n✅ Found ${flvInfo.liveUser} live stream url! 🎉`)
     return {
       url: flvInfo.liveUrl,
       title: flvInfo.liveTitle,
