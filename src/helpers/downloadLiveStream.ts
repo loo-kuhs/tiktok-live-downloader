@@ -1,19 +1,17 @@
 import fs from 'fs'
 import path from 'path'
-import shell, { ExecOptions, ExecCallback } from 'shelljs'
+import shell from 'shelljs'
 import {
   sanitizeUsername,
   newLiveUrl,
   fileNameOutput,
 } from '../utils/constants'
 import fetchHTML from './fetchHTML'
-import { setStreamData } from './getStreamData'
+import setStreamData from './getStreamData'
 import matchRoomId from './matchRoomId'
 import { StreamData } from '../types/StreamData'
 import buildFfmpegCommand from './buildFfmpegCommand'
 import evaluateCookie from './evaluateCookie'
-
-type ExecOptions = { async: boolean }
 
 export async function downloadLiveStream(
   username: string,
@@ -35,12 +33,12 @@ export async function downloadLiveStream(
   try {
     const sanitizedUsername: string = sanitizeUsername(username)
     const liveUrl: string = newLiveUrl(sanitizedUsername)
-    const textHTML: string = await fetchHTML(liveUrl)
+    const myCookie: string = await evaluateCookie()
+    const textHTML: string = await fetchHTML(liveUrl, myCookie)
     const roomId: string = matchRoomId(textHTML)
-    const newCookie: string = await evaluateCookie()
 
     const [streamData]: [StreamData] = await Promise.all([
-      setStreamData(roomId, newCookie),
+      setStreamData(roomId, myCookie),
     ])
 
     const { url, title, isFlv }: StreamData = streamData
@@ -60,16 +58,23 @@ export async function downloadLiveStream(
     console.info(`\n✅ Downloading livestream ${title} to ./${fileName}`)
     console.info(`\n❗ Ctrl+C to stop downloading and exit\n`)
 
-    shell.exec(
-      ffmpegCommand,
-      { async: true } as ExecOptions,
-      (code: number, stdout: string, stderr: string) => {
-        console.log(`Process exited with code ${code}`)
-        if (stdout) console.log(`stdout: ${stdout}`)
-        if (stderr) console.log(`stderr: ${stderr}`)
-        process.exit(code)
+    const runShell = shell.exec(ffmpegCommand, { async: true })
+
+    runShell.stdout.on('data', (data: string) => {
+      console.info(` ${data}`)
+    })
+    runShell.stderr.on('data', (data: string) => {
+      if (data.includes('error')) {
+        console.error(`\r❌ ${data}`)
       }
-    )
+    })
+    runShell.on('exit', (code: number) => {
+      if (code === 0) {
+        console.info(`\n✅ Download completed!`)
+      } else {
+        console.error(`❌ Error: ${code}`)
+      }
+    })
   } catch (error) {
     throw new Error(`❌ Error: ${error}`).stack
   }

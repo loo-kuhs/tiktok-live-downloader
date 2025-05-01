@@ -9,12 +9,11 @@ import { StreamData, StreamInfo } from '../types/StreamData'
  * @return {Promise<StreamData>} - The StreamData object.
  * @throws {Error} - If the live stream url is empty or the user is offline.
  */
-export async function setStreamData(
+export default async function setStreamData(
   roomId: string,
   cookie: string
 ): Promise<StreamData> {
   const [flvInfo] = await Promise.all([getStreamInfo(roomId, cookie, 'FLV')])
-
   const onlineStatus = 2
 
   if (!flvInfo.liveUrl) {

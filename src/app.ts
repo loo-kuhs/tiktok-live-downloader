@@ -19,7 +19,7 @@ program
 
     console.info(`\n🔎 Searching ${username}'s live stream`)
     console.info(`💾 Output directory: ${output}`)
-    console.info(`📹 Format video: ${format}\n`)
+    console.info(`📹 Format video: ${format}`)
 
     downloadLiveStream(username, output, format).catch((err) => {
       console.error(err)
