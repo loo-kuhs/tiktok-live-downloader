@@ -69,6 +69,7 @@ export async function downloadLiveStream(
       process.exit()
     })
   } catch (error) {
-    throw new Error(`❌ Error: ${error}`).stack
+    console.error(`\n❌ Error: ${error}`)
+    throw new Error('❌ Failed to download the live stream.').stack
   }
 }

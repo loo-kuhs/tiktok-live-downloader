@@ -33,7 +33,7 @@ export default async function setStreamData(
   }
 
   throw new Error(
-    `\n❌ No url live stream found! This user is offline or the live url is empty.`
+    `\n❌ No url live stream found! This user is offline or the live url is empty.\n`
   ).message
 }
 
