@@ -22,7 +22,6 @@ async function getWebCastTikTokApiResponse(
   })
 
   const data = await response.json()
-  saveInfoToFile('getWebCastTikTokApiResponse', data)
   const tiktokResponse: WebCastTikTokApiResponse = {
     data:        data.data,
     extra:       data.extra,
