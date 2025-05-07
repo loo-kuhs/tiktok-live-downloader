@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer'
 import { userAgent } from '../utils/constants'
-import saveInfoToFile from '../utils/saveInfoToFile'
 
 /**
  * Fetches the HTML content from the specified URL.

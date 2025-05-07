@@ -1,6 +1,5 @@
 import { WebCastTikTokApiResponse } from '../types/WebCastTikTokApiInterface'
 import { userAgent, webcastTiktokApi } from '../utils/constants'
-import saveInfoToFile from '../utils/saveInfoToFile'
 
 /**
  * It takes a roomId, makes a request to the tiktok api, and returns the response.
