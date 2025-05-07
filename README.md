@@ -11,6 +11,13 @@ This project is currently in development. Before open a issue, please read all t
 > ![GitHub repo size](https://img.shields.io/github/repo-size/loo-kuhs/tiktok-live-downloader?style=for-the-badge)
 > ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/loo-kuhs/tiktok-live-downloader?style=for-the-badge)
 
+## ☕ Support Me on Ko-fi
+
+Found this tool helpful? That’s awesome — I’m glad it helped!  
+If you'd like to support future updates or just say thanks, you can optionally buy me a coffee:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A81ENILS)
+
 ## Installation
 
 ### Requirements
