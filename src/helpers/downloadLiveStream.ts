@@ -6,12 +6,12 @@ import {
   newLiveUrl,
   fileNameOutput,
 } from '../utils/constants'
-import fetchHTML from './fetchHTML'
 import setStreamData from './getStreamData'
 import matchRoomId from './matchRoomId'
 import { StreamData } from '../types/StreamData'
 import buildFfmpegCommand from './buildFfmpegCommand'
 import evaluateCookie from './evaluateCookie'
+import fetchHTMLWithPuppeteer from './fetchHTMLWithPuppeteer'
 
 export async function downloadLiveStream(
   username: string,
@@ -34,7 +34,7 @@ export async function downloadLiveStream(
     const sanitizedUsername: string = sanitizeUsername(username)
     const liveUrl: string = newLiveUrl(sanitizedUsername)
     const myCookie: string = await evaluateCookie()
-    const textHTML: string = await fetchHTML(liveUrl, myCookie)
+    const textHTML: string = await fetchHTMLWithPuppeteer(liveUrl)
     const roomId: string = matchRoomId(textHTML)
 
     const [streamData]: [StreamData] = await Promise.all([
