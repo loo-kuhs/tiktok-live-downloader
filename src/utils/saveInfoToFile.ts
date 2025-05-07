@@ -1,15 +1,14 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
 export default async function saveInfoToFile(
   filename: string,
-  data: string
+  data: string | object | number | boolean
 ): Promise<void> {
   try {
-    const timestamp = new Date().toISOString().replace(/:/g, '-')
+    const timestamp = new Date().toISOString().replace(/:/g, '')
     const formattedDate = timestamp.split('T')[0].replace(/-/g, '')
-    const formattedTime = timestamp.split('T')[1].split('.')[0]
-    const formattedFilename = `${filename}-${formattedTime}_${formattedDate}.log`
+    const formattedFilename = `${filename}-${formattedDate}.log`
 
     const currentDir = join(process.cwd(), 'log_files')
     const filePath = join(currentDir, formattedFilename)
@@ -24,13 +23,23 @@ export default async function saveInfoToFile(
 
     console.info(`\n📝 Saving data to '${filePath}'`)
 
-    const fileContent = `# ${formattedFilename}\n\n${data}`
+    const fileContent = `\n# ${formattedFilename}\n${manageDataByType(data)}`
 
-    writeFileSync(filePath, fileContent, { encoding: 'utf8' })
+    appendFileSync(filePath, fileContent + '\n', { encoding: 'utf8' })
 
     console.info(`\n✅ Data successfully saved to file: ${filePath}`)
   } catch (error) {
     console.error(`\n❌ Error saving the file: ${error}`)
     throw new Error('Failed to save file.')
+  }
+}
+
+function manageDataByType(data: any): string {
+  if (typeof data === 'string') {
+    return data
+  } else if (typeof data === 'object') {
+    return JSON.stringify(data, null, 2)
+  } else {
+    return String(data)
   }
 }

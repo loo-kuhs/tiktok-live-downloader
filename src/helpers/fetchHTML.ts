@@ -22,7 +22,7 @@ export default async function fetchHTML(
 
   if (isWAF) {
     console.warn(
-      `\n⛔ Tiktok WAF detected, don't worry, we will use Puppeteer to fetch the HTML!`
+      `\n⛔ Tiktok WAF detected. Don't worry, we will use Puppeteer to fetch the HTML!`
     )
     return await fetchHTMLWithPuppeteer(url)
   }
