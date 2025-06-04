@@ -16,13 +16,14 @@ export default async function fetchHTMLWithPuppeteer(
   const newBrowser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    /* headless: false, */
   })
 
   const page = await newBrowser.newPage()
 
   await page.setUserAgent(userAgent)
 
-  await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 })
+  await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
 
   const html: string = await page.content()
   await newBrowser.close()
