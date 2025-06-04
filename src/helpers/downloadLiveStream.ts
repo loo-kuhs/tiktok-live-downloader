@@ -58,16 +58,7 @@ export async function downloadLiveStream(
     console.info(`\n✅ Downloading livestream ${title} to ./${fileName}`)
     console.info(`\n❗ Ctrl+C to stop downloading and exit\n`)
 
-    const ffmpegProcess = shell.exec(ffmpegCommand, { async: true })
-
-    process.on('SIGINT', () => {
-      console.info('\n🛑 Finishing FFMPEG process...')
-      if (ffmpegProcess && ffmpegProcess.child) {
-        ffmpegProcess.child.kill('SIGINT')
-      }
-      console.info('\n✅ FFMPEG process finished. Bye!')
-      process.exit()
-    })
+    shell.exec(ffmpegCommand, { async: true })
   } catch (error) {
     console.error(`\n❌ Error: ${error}`)
     throw new Error('❌ Failed to download the live stream.').stack
