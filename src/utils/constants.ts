@@ -24,17 +24,6 @@ export const newLiveUrl = (username: string): string => {
 }
 
 /**
- * It takes a string as an argument and returns a string.
- *
- * @param {number} aId - The aId of the TikTok live stream.
- * @param {string} roomId - The room ID of the live stream.
- * @returns {string} string - The API URL of the live stream.
- */
-export const tiktokApi = (roomId: string): string => {
-  return `https://www.tiktok.com/api/live/detail/?aid=1988&roomID=${roomId}`
-}
-
-/**
  * It takes the room ID of a TikTok live stream and returns the API URL of the live stream.
  *
  * @param {number} aId - The aId of the TikTok live stream.
@@ -96,7 +85,7 @@ ffmpeg \\
   -reconnect_delay_max 2000 \\       # Max delay between retries (2s)
   -rw_timeout 8000000 \\             # I/O timeout in µs (8s)
   -i "${liveUrl}" \\                 # Input source (live stream URL)
-  -movflags use_metadata_tags \\     # Enable metadata tags in MP4 container
+  -movflags +frag_keyframe+empty_moov+use_metadata_tags \\  # Fragmented MP4 with moov at beginning
   -map_metadata 0 \\                 # Copy all metadata from source
   -metadata title="${title}" \\      # Set title metadata
   -metadata artist="${username}" \\  # Set artist metadata
@@ -106,7 +95,7 @@ ffmpeg \\
   -n \\                              # Do not overwrite existing files
   -stats \\                          # Show progress stats
   -hide_banner \\                    # Hide startup banner
-  -loglevel error                    # Only show errors
+  -loglevel debug                    # Show all logs
 `.trim()
 }
 
