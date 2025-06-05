@@ -1,10 +1,11 @@
 {
   "name": "tiktok-live-ts",
-  "version": "1.8.0.0",
+  "version": "2.0.0.0",
   "description": "A TypeScript nodejs application to download live streams from TikTok by the shared URL.",
   "main": "app.js",
   "scripts": {
     "build": "tsc",
+    "esbuild": "esbuild ./src/cli/index.ts --bundle --platform=node --outfile=build/cli.js --alias:@app-cli=src/cli --alias:@app-core=src/core --alias:@app-ffmpeg=src/ffmpeg --alias:@app-cookies=src/cookies  --alias:@app-tiktok=src/tiktok --alias:@app-shared=src/shared --alias:@app-types=src/types",
     "start": "node build/app.js",
     "clear": "rimraf build"
   },
@@ -28,11 +29,13 @@
     "@types/node": "^22.15.3",
     "@types/shelljs": "^0.8.15",
     "@types/web": "^0.0.228",
+    "esbuild": "^0.25.5",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "commander": "^13.1.0",
-    "puppeteer": "^24.7.2",
-    "shelljs": "^0.9.2"
+    "puppeteer": "^24.7.2"
   }
 }

@@ -1,4 +1,4 @@
-import getWebCastTikTokApiResponse from '../api/getWebCastTikTokApiResponse'
+import getWebCastTikTokApiResponse from './getWebCastTikTokApiResponse'
 import { StreamData, StreamInfo } from '../types/StreamData'
 
 /**

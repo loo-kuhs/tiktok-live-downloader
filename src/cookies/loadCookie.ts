@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import TiktokCookie from '../types/TikTokCookieInterface'
+import TiktokCookie from '../tiktok/types/TikTokCookieInterface'
 
 export function loadCookie(): TiktokCookie[] {
   let cookiesData = readFileSync(`./session/cookie.txt`, 'utf8')

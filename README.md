@@ -65,22 +65,24 @@ npm install
 Build the project:
 
 ```bash
-npm run build
+npm run esbuild
 ```
 
 Run the project:
 
 ```bash
-node build/app.js <username> --output <output> --format <format>
+node build/cli.js <username> --output <output> --format <format>
 # or
-node build/app.js <username> -o <output> -f <format>
+node build/cli.js <username> -o <output> -f <format>
 # or
-node build/app.js <username> -o <output>
+node build/cli.js <username> -o <output>
 # or
-node build/app.js <username> -f <format>
+node build/cli.js <username> -f <format>
 # e.g.
-node build/app.js mrbeast --output mydownloads --format mp4
+node build/cli.js mrbeast --output mydownloads --format mp4
 ```
+
+> **Note:** Last tested into Windows 11 with Node.js 22.14.0, npm 11.4.0 and ffmpeg 7.1.1-full_build.
 
 ## Open Issues
 

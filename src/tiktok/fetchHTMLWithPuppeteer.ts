@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { userAgent } from '../utils/constants'
+import { TIKTOK_UA } from "./constants"
 
 /**
  * Fetches the HTML content from the specified URL.
@@ -14,14 +14,14 @@ export default async function fetchHTMLWithPuppeteer(
   )
 
   const newBrowser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    /* headless: false, */
+    /* headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'], */
+    headless: false,
   })
 
   const page = await newBrowser.newPage()
 
-  await page.setUserAgent(userAgent)
+  await page.setUserAgent(TIKTOK_UA)
 
   await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
 

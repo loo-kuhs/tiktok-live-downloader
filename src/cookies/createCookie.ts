@@ -1,5 +1,5 @@
 import { launch } from 'puppeteer'
-import TiktokCookie from '../types/TikTokCookieInterface'
+import TiktokCookie from '../tiktok/types/TikTokCookieInterface'
 
 async function createCookie(): Promise<TiktokCookie[]> {
   console.info(`\n🍪 Creating cookie for API authentication...`)

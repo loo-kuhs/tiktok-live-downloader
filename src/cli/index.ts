@@ -1,6 +1,6 @@
 import { Command } from 'commander'
-import { OptionsProgram } from './types/OptionsProgram'
-import { downloadLiveStream } from './helpers/downloadLiveStream'
+import { OptionsProgram } from '@app-types/OptionsProgram'
+import { downloadLiveStream } from '@app-core/downloadLiveStream'
 
 const program = new Command()
 
