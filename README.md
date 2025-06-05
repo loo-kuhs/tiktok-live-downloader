@@ -22,9 +22,9 @@ If you'd like to support future updates or just say thanks, you can optionally b
 
 ### Requirements
 
-This project requires ffmpeg to be installed on your system. You can download it from [here](https://ffmpeg.org/download.html).
+This project requires ffmpeg to be installed on your system. You can download it from [the official ffmpeg website](https://ffmpeg.org/download.html).
 
-This project uses native fetch, so you need to have Node.js 18.0.0 or higher installed on your system. You can download it from [here](https://nodejs.org/en/download/).
+This project uses native fetch, so you need to have Node.js 18.0.0 or higher installed on your system. You can download it from [the official Node.js downloads page](https://nodejs.org/en/download/).
 
 **Install ffmpeg on Windows:**
   
