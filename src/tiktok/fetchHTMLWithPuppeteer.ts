@@ -14,9 +14,9 @@ export default async function fetchHTMLWithPuppeteer(
   )
 
   const newBrowser = await puppeteer.launch({
-    /* headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'], */
-    headless: false,
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    /* headless: false, */
   })
 
   const page = await newBrowser.newPage()
