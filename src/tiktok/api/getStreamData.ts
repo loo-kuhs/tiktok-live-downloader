@@ -17,8 +17,7 @@ export default async function setStreamData(
   const onlineStatus = 2
 
   if (!flvInfo.liveUrl) {
-    throw new Error(`❌ The user is offline or the live stream url is empty!`)
-      .message
+    throw new Error(`\n❌ The user is offline or the live stream url is empty!`)
   }
 
   if (flvInfo.liveUrl && flvInfo.liveStatus === onlineStatus) {
@@ -43,6 +42,21 @@ async function getStreamInfo(
   type: 'FLV'
 ): Promise<StreamInfo> {
   let response = await getWebCastTikTokApiResponse(roomId, cookie)
+
+  // Verify if we got a valid response
+  if ('prompts' in response.data) {
+    throw new Error(
+      `\n❌ The live stream is not available! Use a logged-in account to watch it.`
+    ).message
+  }
+
+  // Verify Age restriction
+  if (response.data.age_restricted.AgeInterval === 4) {
+    throw new Error(
+      `\n❌ This live stream is age-restricted! You must need a logged-in account to watch it.`
+    ).message
+  }
+
   return {
     liveUrl:
       response.data.stream_url.flv_pull_url.FULL_HD1 ||

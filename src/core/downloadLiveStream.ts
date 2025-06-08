@@ -4,7 +4,7 @@ import { runFfmpeg } from '@app-ffmpeg/runFfmpeg'
 import { sanitizeUsername } from '@app-shared/sanitizeUsername'
 import setStreamData from '@app-tiktok/api/getStreamData'
 import { newLiveUrl } from '@app-tiktok/constants'
-import fetchHTMLWithPuppeteer from '@app-tiktok/fetchHTMLWithPuppeteer'
+import fetchHTML from '@app-tiktok/fetchHTML'
 import matchRoomId from '@app-tiktok/matchRoomId'
 import { StreamData } from '@app-tiktok/types/StreamData'
 import { FfmpegEvents } from '@app-types/FfmpegCmd'
@@ -36,7 +36,7 @@ export async function downloadLiveStream(
     const sanitizedUsername: string = sanitizeUsername(username)
     const liveUrl: string = newLiveUrl(sanitizedUsername)
     const myCookie: string = await evaluateCookie()
-    const profileHTML: string = await fetchHTMLWithPuppeteer(liveUrl)
+    const profileHTML: string = await fetchHTML(liveUrl)
     const roomId: string = matchRoomId(profileHTML)
 
     const [streamData]: [StreamData] = await Promise.all([
@@ -50,7 +50,6 @@ export async function downloadLiveStream(
       sanitizedUsername,
       format === 'mkv' ? 'mkv' : 'mp4'
     )
-    console.log(`Output file: ${outputFile}`)
 
     const ffmpegCommand =
       format === 'mp4'
@@ -85,7 +84,7 @@ export async function downloadLiveStream(
         console.error(`\n❌ Download failed with exit code ${code}`)
         emitter.emit(
           'error',
-          new Error(`Download failed with exit code ${code}`)
+          new Error(`\❌ Download failed with exit code ${code}`)
         )
       }
     })

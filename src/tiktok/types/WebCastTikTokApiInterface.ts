@@ -1,7 +1,12 @@
 export interface WebCastTikTokApiResponse {
-  data:        Data;
+  data:        Data | EmptyData;
   extra:       TiktokCookieExtra;
   status_code: number;
+}
+
+export interface WebCastTikTokEmptyApiResponse {
+  data:        EmptyData;
+  extra:       TiktokCookieExtra;
 }
 
 export interface Data {
@@ -207,6 +212,10 @@ export interface Data {
   with_draw_something:             boolean;
   with_ktv:                        boolean;
   with_linkmic:                    boolean;
+}
+
+export interface EmptyData {
+  prompts: string
 }
 
 export interface AnchorAbMap {

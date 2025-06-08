@@ -6,7 +6,7 @@ import { TIKTOK_UA } from "./constants"
  * @param {string} url - The URL to fetch the HTML from
  * @returns {Promise<string>} - A promise that resolves to the HTML content as a string
  */
-export default async function fetchHTMLWithPuppeteer(
+export default async function fetchHTML(
   url: string
 ): Promise<string> {
   console.warn(
