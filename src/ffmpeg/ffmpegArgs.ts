@@ -28,14 +28,18 @@ export const ffmpegCommandMP4 = (
       '-reconnect_delay_max', '5',
       '-rw_timeout', '8000000', // timeout in microseconds
       '-user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+      '-probesize', '8M',
 
       /* --- Input --- */
+      '-use_wallclock_as_timestamps', '1',
+      '-fflags', '+genpts',
       '-i', liveUrl,
+      '-map', '0',
 
       /* --- Container and Metadata --- */
       '-c', 'copy',
       '-map_metadata', '0',
-      '-movflags', '+frag_keyframe+empty_moov+use_metadata_tags+faststart',
+      /* '-movflags', '+frag_keyframe+empty_moov+use_metadata_tags+faststart', */
       '-metadata', `title=${title}`,
       '-metadata', `artist=${username}`,
       '-metadata', `date=${year}`,

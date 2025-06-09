@@ -12,7 +12,7 @@ program
     `Output file or folder path (eg ./folder or ./folder/file.mp4)`,
     `downloads`
   )
-  .option('-f, --format <format>', 'Output formats valid mp4 and mkv', 'mp4')
+  .option('-f, --format <format>', 'Output formats valid mp4 and mkv', 'mkv')
   .option('-d, --debug', 'output extra debugging')
   .action((username: string, options: OptionsProgram) => {
     const { output, format }: OptionsProgram = options

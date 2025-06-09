@@ -52,9 +52,9 @@ async function getStreamInfo(
 
   // Verify Age restriction
   if (response.data.age_restricted.AgeInterval === 4) {
-    throw new Error(
-      `\n❌ This live stream is age-restricted! You must need a logged-in account to watch it.`
-    ).message
+    console.info(
+      `\n⚠️ This live stream is age-restricted (code 4)! You must need a logged-in account to watch it.`
+    )
   }
 
   return {
